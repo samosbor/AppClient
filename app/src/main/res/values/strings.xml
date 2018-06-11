@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">AppClient</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">UserName</string>
+    <string name="login">Login</string>
+    <string name="register">register</string>
+    <string name="server_host">Server Host:</string>
+    <string name="server_port">Server Port:</string>
+    <string name="password">Password: </string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name:</string>
+    <string name="email">Email:</string>
+    <string name="gender">Gender:</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="toast_login_fail">Login Failed! Please enter all Login info</string>
+    <string name="toast_register_fail">Register Failed! Please enter all Register info</string>
 </resources>
