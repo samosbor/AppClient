@@ -17,4 +17,5 @@
     <string name="female">Female</string>
     <string name="toast_login_fail">Login Failed! Please enter all Login info</string>
     <string name="toast_register_fail">Register Failed! Please enter all Register info</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

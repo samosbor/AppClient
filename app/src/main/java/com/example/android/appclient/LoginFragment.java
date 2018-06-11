@@ -20,6 +20,7 @@ import net.RegisterResult;
 
 import java.net.URL;
 
+import tree.Family;
 import tree.Person;
 
 
@@ -174,6 +175,8 @@ public class LoginFragment extends Fragment {
             personID = result.getPersonID();
             PersonIDResult personIDResult = client.getPerson(serverHostEditText.getText().toString(), serverPortEditText.getText().toString(), personID, authToken);
             person = personIDResult.getPerson();
+            Family.getInstance().setPersonList(client.getPeople(serverHostEditText.getText().toString(), serverPortEditText.getText().toString(), authToken));
+            Family.getInstance().setEventList(client.getEvents(serverHostEditText.getText().toString(), serverPortEditText.getText().toString(), authToken));
             return result;
         }
 
@@ -186,6 +189,10 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getActivity(), result.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Login success. First name: " + person.getFirstName() + " Last name: " + person.getLastName(), Toast.LENGTH_SHORT).show();
+                    MapFragment mapFragment = new MapFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.Fragment, mapFragment).commit();
+
                 }
             }
         }
@@ -211,7 +218,16 @@ public class LoginFragment extends Fragment {
                 gender = "f";
             }
             RegisterRequest request = new RegisterRequest(userNameEditText.getText().toString(), passwordEditText.getText().toString(), emailEditText.getText().toString(), firstNameEditText.getText().toString(), lastNameEditText.getText().toString(), gender);
-            return client.register(serverHostEditText.getText().toString(), serverPortEditText.getText().toString(), request);
+            RegisterResult result = client.register(serverHostEditText.getText().toString(), serverPortEditText.getText().toString(), request);
+            if(result == null){
+                return result;
+            }
+            if(result.getMessage() != null){
+                return result;
+            }
+            Family.getInstance().setPersonList(client.getPeople(serverHostEditText.getText().toString(), serverPortEditText.getText().toString(), authToken));
+            Family.getInstance().setEventList(client.getEvents(serverHostEditText.getText().toString(), serverPortEditText.getText().toString(), authToken));
+            return result;
         }
 
         @Override
@@ -229,6 +245,14 @@ public class LoginFragment extends Fragment {
         }
     }
 
-
+    public class DataSyncTask extends AsyncTask<URL , Void, Void>{
+        @Override
+        protected Void doInBackground(URL... urls) {
+            Client client = new Client();
+            Family.getInstance().setPersonList(client.getPeople(serverHostEditText.getText().toString(), serverPortEditText.getText().toString(), authToken));
+            Family.getInstance().setEventList(client.getEvents(serverHostEditText.getText().toString(), serverPortEditText.getText().toString(), authToken));
+            return null;
+        }
+    }
 
 }
