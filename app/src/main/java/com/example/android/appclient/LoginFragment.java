@@ -240,6 +240,9 @@ public class LoginFragment extends Fragment {
                 } else {
                     authToken = result.getAuthToken();
                     Toast.makeText(getActivity(), "Register success. First Name: " + firstNameEditText.getText().toString() + " Last name: " + lastNameEditText.getText().toString(), Toast.LENGTH_SHORT).show();
+                    MapFragment mapFragment = new MapFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.Fragment, mapFragment).commit();
                 }
             }
         }
